@@ -7,9 +7,9 @@
     "email": "johnny-cash@darek.one"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node --use_strict app.js"
   },
   "dependencies": {
-    "johnny-five": "^0.9.7"
+    "johnny-five": "^0.9.17"
   }
 }
