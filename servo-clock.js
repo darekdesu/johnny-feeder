@@ -1,7 +1,7 @@
 const five = require("johnny-five");
 const board = new five.Board();
 
-board.on("ready", function() {
+board.on("ready", () => {
     const servo = five.Servo({
         pin: 9,
         center: true
@@ -29,4 +29,8 @@ board.on("ready", function() {
 
         console.log('second: ', second, 'angle: ', angle, 'clockDirection: ', clockDirection);
     }, 1000);
+});
+
+board.on("message", (event) => {
+    console.log("Received a %s message, from %s, reporting: %s", event.type, event.class, event.message);
 });
