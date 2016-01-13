@@ -68,10 +68,12 @@ class JohhnyFeeder extends Component {
     }
 
     handleInstantFeedingClick() {
-        socket.emit('handleInstantFeedingClick');
+        const instantFeeding = this.state.instantFeeding;
 
+        socket.emit('handleInstantFeedingClick');
         this.setState({
             instantFeeding: {
+                ...instantFeeding,
                 isButtonActive: false,
                 showAlert: false
             }
