@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-//import Alert from 'alert.jsx';
+import Alert from './alert.jsx';
+import { ALERT_SUCCESS } from '../consts/alertTypes.jsx';
 
 class InstantFeeding extends Component {
     static propTypes = {
@@ -29,11 +30,7 @@ class InstantFeeding extends Component {
                 <div style={divStyles}>
                     <h1>Karmienie na żądanie!</h1>
                 </div>
-                { showAlert &&
-                    <div className="alert alert-success" role="alert">
-                        <strong>Sypanie karmy zakończone sukcesem.</strong> Twój zwierzak będzie szczęśliwy! ^_^
-                    </div>
-                }
+                { showAlert && <Alert type={ALERT_SUCCESS}/>}
                 <button
                     onClick={this.handleClick}
                     type="button"

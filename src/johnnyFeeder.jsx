@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Navigation from './components/navigation.jsx';
 import InstantFeeding from './components/instantFeeding.jsx';
 import ScheduledFeeding from './components/scheduledFeeding.jsx';
-import { ALERT_DANGER, ALERT_INFO, ALERT_SUCCESS, ALERT_WARNING} from './consts/alert.jsx';
+import { ALERT_DANGER, ALERT_INFO, ALERT_SUCCESS, ALERT_WARNING} from './consts/alertTypes.jsx';
 
 const socket = io();
 const styles = {
@@ -13,18 +13,16 @@ const styles = {
 };
 
 class JohhnyFeeder extends Component {
-    constructor() {
-        super();
-        this.handleInstantFeedingClick = this.handleInstantFeedingClick.bind(this);
-        this._handledInstantFeedingClick = this._handledInstantFeedingClick.bind(this);
-
-        this.state = {
-            instantFeeding: {
-                isButtonActive: true,
-                showAlert: false
-            }
-        };
-    }
+    state = {
+        instantFeeding: {
+            isButtonActive: true,
+            showAlert: false
+        },
+        scheduledFeeding: {
+            isAddButtonActive: true,
+            isEditMode: true
+        }
+    };
 
     componentWillMount() {
         let i;
@@ -44,7 +42,8 @@ class JohhnyFeeder extends Component {
         socket.on('handledInstantFeedingClick', this._handledInstantFeedingClick);
     }
 
-    _handledInstantFeedingClick(result) {
+    // Instant Feeding Actions
+    _handledInstantFeedingClick = (result) => {
         if (!result.instantFeedingStatus) {
             this.setState({
                 instantFeeding: {
@@ -65,9 +64,9 @@ class JohhnyFeeder extends Component {
                 alertMessage: 'Udało się!'
             }
         });
-    }
+    };
 
-    handleInstantFeedingClick() {
+    handleInstantFeedingClick = () => {
         const instantFeeding = this.state.instantFeeding;
 
         socket.emit('handleInstantFeedingClick');
@@ -78,13 +77,54 @@ class JohhnyFeeder extends Component {
                 showAlert: false
             }
         });
+    };
 
-    }
+    // Scheduled Feeding Actions
+    handleAddScheduledFeedingClick = () => {
+        const scheduledFeeding = this.state.scheduledFeeding;
 
-    handleInstantFeedingAlert() {
-        return false;
+        this.setState({
+            scheduledFeeding: {
+                ...scheduledFeeding,
+                isAddButtonActive: false
+            }
+        });
+    };
 
-    }
+    handleSaveScheduledFeedingClick = (scheduledForm) => {
+        const scheduledFeeding = this.state.scheduledFeeding;
+
+        console.log('scheduledForm', scheduledForm);
+
+        if (scheduledForm.checkedDays.length === 0) {
+            this.setState({
+                scheduledFeeding: {
+                    ...scheduledFeeding,
+                    showInvalidScheduledFormAlert: true
+                }
+            });
+            return;
+        }
+
+        this.setState({
+            scheduledFeeding: {
+                ...scheduledFeeding,
+                isAddButtonActive: true,
+                showInvalidScheduledFormAlert: false
+            }
+        });
+    };
+
+    handleCancelScheduledFeedingClick = () => {
+        const scheduledFeeding = this.state.scheduledFeeding;
+
+        this.setState({
+            scheduledFeeding: {
+                ...scheduledFeeding,
+                isAddButtonActive: true
+            }
+        });
+    };
 
     render() {
         return (
@@ -94,7 +134,11 @@ class JohhnyFeeder extends Component {
                     <InstantFeeding
                         data={this.state.instantFeeding}
                         onInstantFeedingClick={this.handleInstantFeedingClick}/>
-                    <ScheduledFeeding/>
+                    <ScheduledFeeding
+                        data={this.state.scheduledFeeding}
+                        onAddScheduledFeedingClick={this.handleAddScheduledFeedingClick}
+                        onSaveScheduledFeedingClick={this.handleSaveScheduledFeedingClick}
+                        onCancelScheduledFeedingClick={this.handleCancelScheduledFeedingClick}/>
                 </div>
             </div>
         );
