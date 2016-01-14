@@ -7,7 +7,7 @@ import { ALERT_DANGER, ALERT_INFO, ALERT_SUCCESS, ALERT_WARNING} from './consts/
 const socket = io();
 const styles = {
     body: {
-        background: 'url(images/wood-background.jpg)',
+        background: 'url(images/linedpaper.png)',
         paddingTop: '50px'
     }
 };
@@ -121,7 +121,8 @@ class JohhnyFeeder extends Component {
         this.setState({
             scheduledFeeding: {
                 ...scheduledFeeding,
-                isAddButtonActive: true
+                isAddButtonActive: true,
+                showInvalidScheduledFormAlert: false
             }
         });
     };

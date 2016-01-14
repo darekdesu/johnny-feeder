@@ -27,17 +27,25 @@ class InstantFeeding extends Component {
 
         return (
             <div className="row">
-                <div style={divStyles}>
-                    <h1>Karmienie na żądanie!</h1>
+                <div className="col-xs-12">
+                    <div style={divStyles}>
+                        <h1>Karmienie na żądanie!</h1>
+                    </div>
+                    { showAlert && <Alert type={ALERT_SUCCESS}/>}
+
+                    <div className="row">
+                        <div className="col-xs-12" style={{textAlign: 'center'}}>
+                            <button
+                                onClick={this.handleClick}
+                                type="button"
+                                className="btn btn-lg btn-primary"
+                                disabled={!isButtonActive}>
+                                Nakarm teraz!
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
-                { showAlert && <Alert type={ALERT_SUCCESS}/>}
-                <button
-                    onClick={this.handleClick}
-                    type="button"
-                    className="btn btn-lg btn-primary"
-                    disabled={!isButtonActive}>
-                    Nakarm teraz!
-                </button>
             </div>
         );
     }

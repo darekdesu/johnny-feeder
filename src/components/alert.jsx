@@ -17,9 +17,13 @@ class Alert extends Component {
         }
 
         return (
-            <div className={alertClassName}
-                 role="alert"
-                 dangerouslySetInnerHTML={{__html: alertMessage}}/>
+            <div className="row">
+                <div className="col-xs-12">
+                    <div className={alertClassName}
+                         role="alert"
+                         dangerouslySetInnerHTML={{__html: alertMessage}}/>
+                </div>
+            </div>
         );
     }
 }
