@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import JohnnyFeeder from './johnnyFeeder.jsx';
+import JohnnyFeeder from './containters/johnnyFeeder.jsx';
 
 
 const rootElement = document.getElementById('johnnyfeeder');

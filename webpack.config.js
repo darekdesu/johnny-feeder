@@ -4,7 +4,7 @@ const pathToReact = path.resolve(node_modules, 'react/dist/react.min.js');
 const pathToSocket = path.resolve(node_modules, 'react/dist/react.min.js');
 
 const config = {
-    entry: path.resolve(__dirname + '/src/main.js'),
+    entry: path.resolve(__dirname + '/src/app.js'),
     output: {
         path: path.resolve(__dirname + '/public/dist'),
         filename: 'bundle.js'

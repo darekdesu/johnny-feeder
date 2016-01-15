@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import Navigation from './components/navigation.jsx';
-import InstantFeeding from './components/instantFeeding.jsx';
-import ScheduledFeeding from './components/scheduledFeeding.jsx';
-import { ALERT_DANGER, ALERT_INFO, ALERT_SUCCESS, ALERT_WARNING} from './consts/alertTypes.jsx';
+import Navigation from '../components/navigation.jsx';
+import InstantFeeding from '../components/instantFeeding.jsx';
+import ScheduledFeeding from '../components/scheduledFeeding.jsx';
+import { ALERT_DANGER, ALERT_INFO, ALERT_SUCCESS, ALERT_WARNING } from '../consts/alertTypes.jsx';
 
 const socket = io();
 const styles = {
@@ -40,6 +40,8 @@ class JohhnyFeeder extends Component {
 
     componentDidMount() {
         socket.on('handledInstantFeedingClick', this._handledInstantFeedingClick);
+        socket.on('handledSavedScheduledFeedingClick', this._saveSheduledTimes);
+        socket.on('sendScheduledTimesInit', this._saveSheduledTimes);
     }
 
     // Instant Feeding Actions
@@ -80,6 +82,13 @@ class JohhnyFeeder extends Component {
     };
 
     // Scheduled Feeding Actions
+    _saveSheduledTimes = (scheduledTimes) => {
+        this.setState({
+            scheduledTimes: scheduledTimes
+        });
+    };
+
+
     handleAddScheduledFeedingClick = () => {
         const scheduledFeeding = this.state.scheduledFeeding;
 
@@ -94,8 +103,6 @@ class JohhnyFeeder extends Component {
     handleSaveScheduledFeedingClick = (scheduledForm) => {
         const scheduledFeeding = this.state.scheduledFeeding;
 
-        console.log('scheduledForm', scheduledForm);
-
         if (scheduledForm.checkedDays.length === 0) {
             this.setState({
                 scheduledFeeding: {
@@ -106,6 +113,7 @@ class JohhnyFeeder extends Component {
             return;
         }
 
+        socket.emit('handleSaveScheduledFeedingClick', scheduledForm);
         this.setState({
             scheduledFeeding: {
                 ...scheduledFeeding,

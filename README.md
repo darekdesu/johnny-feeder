@@ -4,11 +4,14 @@ Feeder system for your animals based on Node.js and framework Johnny-Five for co
 # Installation
 
 Download all dependencies from npm repository:
-- `npm install`
+`npm install`
 
-Build all packages localy:
-- `npm run build`
+Build all needed packages locally:
+`npm run build`
 
-Start Johnny Feeder:
-- `npm run start`
+Start Johnny Feeder app:
+`npm run start`
+
+Go to web browser:
+`http://localhost:3000`
 
