@@ -29,7 +29,8 @@ board.on("ready", () => {
 
     // Register events on socket connection
     io.on('connection', (client) => {
-        client.emit('sendScheduledTimesInit', scheduledTimes);
+        client.emit('sendScheduledTimes', scheduledTimes);
+        client.broadcast.emit('sendScheduledTimes', scheduledTimes);
 
         client.on('handleInstantFeedingClick', () => {
             let randomInteger = (max, min) => {
@@ -49,15 +50,15 @@ board.on("ready", () => {
             scheduledTimes.push(scheduleUtils.decorateScheduledTime(scheduledTime));
 
             scheduledTimes.forEach((scheduledTime) => {
-                schedule.scheduleJob(
-                    scheduledTime.id,
-                    {
-                        hour: scheduledTime.hour,
-                        minute: scheduledTime.minute,
-                        checkedDays: scheduledTime.checkedDays
-                    }, () => {
-                        // TODO: Add magic to run servo on cheduled time here
-                        console.log('Run servo!! ', Date.now());
+                const scheduledTimeCronTab = {
+                    hour: scheduledTime.hour,
+                    minute: scheduledTime.minute,
+                    checkedDays: scheduledTime.checkedDays
+                };
+
+                schedule.scheduleJob(scheduledTime.id, scheduledTimeCronTab, () => {
+                    // TODO: Add magic to run servo on cheduled time here
+                    console.log('Run servo!! ', Date.now());
                 });
             });
 
@@ -65,7 +66,8 @@ board.on("ready", () => {
             console.log(scheduledTime);
             console.log(schedule.scheduledJobs);
 
-            client.emit('handledSavedScheduledFeedingClick', scheduledTimes);
+            client.emit('sendScheduledTimes', scheduledTimes);
+            client.broadcast.emit('sendScheduledTimes', scheduledTimes);
         });
 
     });

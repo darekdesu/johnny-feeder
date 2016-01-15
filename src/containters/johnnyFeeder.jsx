@@ -39,13 +39,17 @@ class JohhnyFeeder extends Component {
     }
 
     componentDidMount() {
-        socket.on('handledInstantFeedingClick', this._handledInstantFeedingClick);
-        socket.on('handledSavedScheduledFeedingClick', this._saveSheduledTimes);
-        socket.on('sendScheduledTimesInit', this._saveSheduledTimes);
+        socket.on('handledInstantFeedingClick', this._updateInstantFeedingSection);
+        socket.on('sendScheduledTimes', this._updateScheduledTimes);
     }
 
-    // Instant Feeding Actions
-    _handledInstantFeedingClick = (result) => {
+    _updateScheduledTimes = (scheduledTimes) => {
+        this.setState({
+            scheduledTimes: scheduledTimes
+        });
+    };
+
+    _updateInstantFeedingSection = (result) => {
         if (!result.instantFeedingStatus) {
             this.setState({
                 instantFeeding: {
@@ -68,6 +72,7 @@ class JohhnyFeeder extends Component {
         });
     };
 
+    // Instant Feeding Actions
     handleInstantFeedingClick = () => {
         const instantFeeding = this.state.instantFeeding;
 
@@ -82,13 +87,6 @@ class JohhnyFeeder extends Component {
     };
 
     // Scheduled Feeding Actions
-    _saveSheduledTimes = (scheduledTimes) => {
-        this.setState({
-            scheduledTimes: scheduledTimes
-        });
-    };
-
-
     handleAddScheduledFeedingClick = () => {
         const scheduledFeeding = this.state.scheduledFeeding;
 
