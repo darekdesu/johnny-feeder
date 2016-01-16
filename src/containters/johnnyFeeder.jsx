@@ -112,7 +112,6 @@ class JohhnyFeeder extends Component {
             return;
         }
 
-        socket.emit('handleSaveScheduledFeedingClick', scheduledForm);
         this.setState({
             scheduledFeeding: {
                 ...scheduledFeeding,
@@ -120,6 +119,7 @@ class JohhnyFeeder extends Component {
                 showInvalidScheduledFormAlert: false
             }
         });
+        socket.emit('handleSaveScheduledFeedingClick', scheduledForm);
     };
 
     handleCancelScheduledFeedingClick = () => {
@@ -135,7 +135,7 @@ class JohhnyFeeder extends Component {
     };
 
     handleRemoveScheduledFeedingClick = (removeScheduleId) => {
-        console.log('remove clicked!!! ', removeScheduleId);
+        socket.emit('handleRemoveScheduledFeedingClick', removeScheduleId);
     };
 
     render() {

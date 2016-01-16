@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Alert from './alert.jsx';
-import { addLeadingZeroToTime, removeLeadingZeroInTime} from '../utils/schedule';
+import { addLeadingZeroToTime, removeLeadingZeroInTime} from '../utils/timeUtil';
 import { ALERT_SCHEDULED_FORM_INVALID } from '../consts/alertTypes.jsx';
 
 const HOURS_IN_DAY = 24;

@@ -3,11 +3,9 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const path = require('path');
-const schedule = require('node-schedule');
 const five = require("johnny-five");
 const favicon = require('serve-favicon');
-
-const scheduleUtils = require('./utils/schedule');
+const scheduleUtil = require('./utils/scheduleUtil');
 
 // Initialize appication with route / (that means root of the application)
 app.get('/', (req, res) => {
@@ -20,7 +18,6 @@ app.use('/static/react', express.static(path.join(__dirname + '/../node_modules/
 app.use(favicon(path.join(__dirname + '/../public/favicon.ico')));
 
 const SERVO_TIMEOUT_IN_MS = 3000;
-let scheduledTimes = []; //array with all scheduled times
 
 /*const board = new five.Board();
 board.on("ready", () => {
@@ -31,8 +28,9 @@ board.on("ready", () => {
 
     // Register events on socket connection
     io.on('connection', (client) => {
-        client.emit('sendScheduledTimes', scheduledTimes);
-        client.broadcast.emit('sendScheduledTimes', scheduledTimes);
+        scheduleUtil.getScheduledTimes().then((result) => [
+            scheduleUtil.sendScheduledTimes(client, result)
+        ]);
 
         client.on('handleInstantFeedingClick', () => {
             let randomInteger = (max, min) => {
@@ -49,27 +47,15 @@ board.on("ready", () => {
         });
 
         client.on('handleSaveScheduledFeedingClick', (scheduledTime) => {
-            scheduledTimes.push(scheduleUtils.decorateScheduledTime(scheduledTime));
-
-            scheduledTimes.forEach((scheduledTime) => {
-                const scheduledTimeCronTab = {
-                    hour: scheduledTime.hour,
-                    minute: scheduledTime.minute,
-                    checkedDays: scheduledTime.checkedDays
-                };
-
-                schedule.scheduleJob(scheduledTime.id, scheduledTimeCronTab, () => {
-                    // TODO: Add magic to run servo on cheduled time here
-                    console.log('Run servo!! ', Date.now());
-                });
+            scheduleUtil.addScheduledTime(scheduledTime).then((scheduledTimes) => {
+                scheduleUtil.sendScheduledTimes(client, scheduledTimes);
             });
+        });
 
-
-            console.log(scheduledTime);
-            //console.log(schedule.scheduledJobs);
-
-            client.emit('sendScheduledTimes', scheduledTimes);
-            client.broadcast.emit('sendScheduledTimes', scheduledTimes);
+        client.on('handleRemoveScheduledFeedingClick', (removeScheduleId) => {
+            scheduleUtil.removeScheduledTime(removeScheduleId).then((scheduledTimes) => {
+                scheduleUtil.sendScheduledTimes(client, scheduledTimes);
+            });
         });
 
     });

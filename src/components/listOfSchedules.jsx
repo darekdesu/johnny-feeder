@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Alert from './alert.jsx';
-import Button from './button.jsx';
-import { addLeadingZeroToTime, removeLeadingZeroInTime, convertTimestamp } from '../utils/schedule';
+import { addLeadingZeroToTime, removeLeadingZeroInTime, convertTimestamp } from '../utils/timeUtil';
 import { ALERT_SCHEDULED_FORM_INVALID } from '../consts/alertTypes.jsx';
 
 
@@ -16,31 +15,8 @@ class ListOfSchedules extends Component {
     };
 
     render() {
-        const { scheduledTimes, onRemoveScheduledFeedingClick } = this.props;
-        const daysOfWeekShort = ['Pn', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Ndz'];
+        const { scheduledTimes } = this.props;
         const daysOfWeekLong = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
-
-        const deleteButton = (removeScheduleId) => {
-            return(
-                <button
-                    onClick={onRemoveScheduledFeedingClick(removeScheduleId)}
-                    type="button"
-                    className='btn btn-danger'>
-                    Usuń
-                </button>
-            )
-        };
-
-        const rows = (list) => list.map((item, key) => (
-            <tr key={key}>
-                <td>{addLeadingZeroToTime(item.hour)}:{addLeadingZeroToTime(item.minute)}</td>
-                <td>{item.id}</td>
-                <td>{convertTimestamp(item.addedDate)}</td>
-                <td>
-                    {deleteButton(item.id)}
-                </td>
-            </tr>
-        ));
 
         return (
             <div className="row" style={{marginTop: '50px'}}>
@@ -55,7 +31,23 @@ class ListOfSchedules extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                            {rows(scheduledTimes)}
+                        {
+                            scheduledTimes.map((item, key) => (
+                                <tr key={key}>
+                                    <td>{addLeadingZeroToTime(item.hour)}:{addLeadingZeroToTime(item.minute)}</td>
+                                    <td>{item.checkedDays.map((dayIndex) => (daysOfWeekLong[dayIndex])).join(", ")}</td>
+                                    <td>{convertTimestamp(item.addedDate)}</td>
+                                    <td>
+                                        <button
+                                            onClick={() => {this.handleRemoveScheduledFeedingClick(item.id)}}
+                                            type="button"
+                                            className='btn btn-danger'>
+                                            Usuń
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
                         </tbody>
                     </table>
                 </div>

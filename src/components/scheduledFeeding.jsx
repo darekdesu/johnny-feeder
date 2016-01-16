@@ -26,7 +26,7 @@ class ScheduledFeeding extends Component {
                         onSaveScheduledFeedingClick={this.props.onSaveScheduledFeedingClick}
                         onCancelScheduledFeedingClick={this.props.onCancelScheduledFeedingClick}/>
 
-                    { /* TODO: Unlock this later - Boolean(this.props.scheduledTimes.length) &&*/
+                    { Boolean(this.props.scheduledTimes.length) &&
                     <ListOfSchedules
                         scheduledTimes={this.props.scheduledTimes}
                         onRemoveScheduledFeedingClick={this.props.onRemoveScheduledFeedingClick}/>
