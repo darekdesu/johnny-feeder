@@ -5,6 +5,7 @@ import { ALERT_SCHEDULED_FORM_INVALID } from '../consts/alertTypes.jsx';
 
 const HOURS_IN_DAY = 24;
 const MINUTES_IN_HOUR = 60;
+const CRON_TAB_ADDITIONAL_INDEX = 1;
 
 class AddNewSchedule extends Component {
     static propTypes = {
@@ -80,7 +81,7 @@ class AddNewSchedule extends Component {
                                     <div className="checkbox" key={index}>
                                         <label htmlFor={`${day}_${index}`}>
                                             <input type="checkbox"
-                                                   value={index}
+                                                   value={index + CRON_TAB_ADDITIONAL_INDEX}
                                                    id={`${day}_${index}`}
                                                    ref={ref => !!ref && this.checkboxList.push(ref)}/>
                                             {day}

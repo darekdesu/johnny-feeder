@@ -1,6 +1,7 @@
 const shortid = require('shortid');
 const schedule = require('node-schedule');
 const q = require('q');
+const boardUtil = require('./boardUtil');
 
 let scheduledTimes = [];
 
@@ -21,22 +22,6 @@ const decorateScheduledTime = (scheduledTime) => {
     return scheduledTime;
 };
 
-const removeScheduledTime = (removeScheduleId) => {
-    const deferred = q.defer();
-
-    try {
-        removeScheduledTimePromise(removeScheduleId).then(() => {
-            deferred.resolve(scheduledTimes);
-        });
-    } catch (ex) {
-        console.error('removeScheduledTime outer', ex.message);
-
-        deferred.reject();
-    }
-
-    return deferred.promise;
-};
-
 const removeScheduledTimePromise = (removeScheduleId) => {
     const deferred = q.defer();
 
@@ -47,44 +32,68 @@ const removeScheduledTimePromise = (removeScheduleId) => {
     return deferred.promise;
 };
 
-const addScheduledTime = (scheduledTime) => {
+const removeScheduledTime = (removeScheduleId) => {
     const deferred = q.defer();
 
-    try {
-        scheduledTimes.push(decorateScheduledTime(scheduledTime));
-
-        scheduledTimes.forEach((scheduledTime) => {
-            const scheduledTimeCronTab = {
-                hour: scheduledTime.hour,
-                minute: scheduledTime.minute,
-                checkedDays: scheduledTime.checkedDays
-            };
-
-            schedule.scheduleJob(scheduledTime.id, scheduledTimeCronTab, () => {
-                // TODO: Add magic to run servo on cheduled time here
-                console.log('Run servo!! ', Date.now());
-            });
-        });
-
-        deferred.resolve(scheduledTimes);
-    } catch (ex) {
-        console.error('addScheduledTime outer', ex.message);
-
-        deferred.reject();
-    }
+    removeScheduledTimePromise(removeScheduleId)
+        .catch(() => {
+            console.error('removeScheduledTime outer', ex.message);
+            deferred.reject();
+        })
+        .then(() => (deferred.resolve(scheduledTimes)));
 
     return deferred.promise;
 };
 
-const sendScheduledTimes = (client, scheduledTimes) => {
-    client.emit('sendScheduledTimes', scheduledTimes);
-    client.broadcast.emit('sendScheduledTimes', scheduledTimes);
+const pushToScheduledTimes = (scheduledTimes, scheduledTime) => {
+    const deferred = q.defer();
+    scheduledTimes.push(decorateScheduledTime(scheduledTime));
+    deferred.resolve();
+    return deferred.promise;
+};
+
+const createCronTabForEachScheduledTime = (scheduledTime) => {
+    const deferred = q.defer();
+    const scheduledTimeCronTab = {
+        hour: scheduledTime.hour,
+        minute: scheduledTime.minute,
+        dayOfWeek: scheduledTime.checkedDays
+    };
+
+    deferred.resolve(scheduledTimeCronTab);
+    return deferred.promise;
+};
+
+const addScheduledJobForEachScheduledTime = (scheduledTime, scheduledTimeCronTab) => {
+    const deferred = q.defer();
+
+    schedule.scheduleJob(scheduledTime.id, scheduledTimeCronTab, () => {
+        boardUtil.rotateServo();
+        console.log('Rotating servo ', Date.now());
+    });
+
+    deferred.resolve();
+    return deferred.promise;
+};
+
+const addScheduledTime = (scheduledTime) => {
+    const deferred = q.defer();
+
+    pushToScheduledTimes(scheduledTimes, scheduledTime)
+        .then(() => (createCronTabForEachScheduledTime(scheduledTime)))
+        .then((scheduledTimeCronTab) => (addScheduledJobForEachScheduledTime(scheduledTime, scheduledTimeCronTab)))
+        .catch((ex) => {
+            console.error('addScheduledTime outer', ex.message);
+            deferred.reject();
+        })
+        .then(() => (deferred.resolve(scheduledTimes)));
+
+    return deferred.promise;
 };
 
 module.exports = {
     getScheduledTimes,
     decorateScheduledTime,
     removeScheduledTime,
-    addScheduledTime,
-    sendScheduledTimes
+    addScheduledTime
 };

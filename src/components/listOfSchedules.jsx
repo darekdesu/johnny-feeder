@@ -16,7 +16,7 @@ class ListOfSchedules extends Component {
 
     render() {
         const { scheduledTimes } = this.props;
-        const daysOfWeekLong = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
+        const daysOfWeekLongWithCronIndex = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
 
         return (
             <div className="row" style={{marginTop: '50px'}}>
@@ -35,7 +35,7 @@ class ListOfSchedules extends Component {
                             scheduledTimes.map((item, key) => (
                                 <tr key={key}>
                                     <td>{addLeadingZeroToTime(item.hour)}:{addLeadingZeroToTime(item.minute)}</td>
-                                    <td>{item.checkedDays.map((dayIndex) => (daysOfWeekLong[dayIndex])).join(", ")}</td>
+                                    <td>{item.checkedDays.map((dayIndex) => (daysOfWeekLongWithCronIndex[dayIndex])).join(", ")}</td>
                                     <td>{convertTimestamp(item.addedDate)}</td>
                                     <td>
                                         <button
