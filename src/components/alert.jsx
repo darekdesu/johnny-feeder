@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { ALERT_SUCCESS, ALERT_SCHEDULED_FORM_INVALID } from '../consts/alertTypes.jsx';
+import moment from 'moment';
+moment.locale('pl');
 
 class Alert extends Component {
     render() {
@@ -9,7 +11,7 @@ class Alert extends Component {
         let alertMessage;
         switch (type) {
             case ALERT_SUCCESS:
-                alertMessage = '<strong>Sypanie karmy zakończone sukcesem.</strong> Twój zwierzak będzie szczęśliwy! ^_^';
+                alertMessage = '<strong>Sypanie karmy zakończone sukcesem (' + moment().format('ll, HH:mm') + ').</strong> Twój zwierzak będzie szczęśliwy! ^_^';
                 break;
             case ALERT_SCHEDULED_FORM_INVALID:
                 alertMessage = '<strong>Nie wybrano żadnych dni tygodnia.</strong> Wybierz, któryś i spróbuj ponownie lub anuluj.';
