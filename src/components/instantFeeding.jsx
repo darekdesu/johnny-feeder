@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Header from './header.jsx';
 import Alert from './alert.jsx';
 import { ALERT_SUCCESS } from '../consts/alertTypes.jsx';
 
@@ -19,18 +20,10 @@ class InstantFeeding extends Component {
 
     render() {
         const { isButtonActive, showAlert } = this.props.data;
-        const divStyles = {
-            paddingBottom: '9px',
-            margin: '40px 0 20px',
-            borderBottom: '1px solid #000'
-        };
-
         return (
             <div className="row">
                 <div className="col-xs-12">
-                    <div style={divStyles}>
-                        <h1>Karmienie na żądanie!</h1>
-                    </div>
+                    <Header title="Karmienie na żądanie!"/>
                     { showAlert && <Alert type={ALERT_SUCCESS}/>}
 
                     <div className="row">
@@ -44,7 +37,6 @@ class InstantFeeding extends Component {
                             </button>
                         </div>
                     </div>
-
                 </div>
             </div>
         );

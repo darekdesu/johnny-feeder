@@ -5,6 +5,7 @@ const io = require('socket.io')(server);
 const path = require('path');
 const schedule = require('node-schedule');
 const five = require("johnny-five");
+const favicon = require('serve-favicon');
 
 const scheduleUtils = require('./utils/schedule');
 
@@ -13,13 +14,14 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname + '/../public')));
 app.use('/static/bootstrap', express.static(path.join(__dirname + '/../node_modules/bootstrap/dist/')));
 app.use('/static/react', express.static(path.join(__dirname + '/../node_modules/react/dist/')));
-
-let scheduledTimes = []; //array with all scheduled times
+app.use(favicon(path.join(__dirname + '/../public/favicon.ico')));
 
 const SERVO_TIMEOUT_IN_MS = 3000;
+let scheduledTimes = []; //array with all scheduled times
+
 /*const board = new five.Board();
 board.on("ready", () => {
     const servo = new five.Servo({
@@ -36,8 +38,8 @@ board.on("ready", () => {
             let randomInteger = (max, min) => {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             };
-            servo.to(randomInteger(180,0));
-
+            //servo.to(randomInteger(180,0));
+            //
 
             setTimeout(() => {
                 client.emit('handledInstantFeedingClick', {
@@ -64,7 +66,7 @@ board.on("ready", () => {
 
 
             console.log(scheduledTime);
-            console.log(schedule.scheduledJobs);
+            //console.log(schedule.scheduledJobs);
 
             client.emit('sendScheduledTimes', scheduledTimes);
             client.broadcast.emit('sendScheduledTimes', scheduledTimes);

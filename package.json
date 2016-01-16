@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node --use_strict app.js",
     "build": "webpack --config webpack.config.js --progress --colors",
-    "unit": "mocha --compilers js:babel-core/register --recursive test/**/*.spec.js"
+    "unit": "mocha --compilers js:babel-core/register --recursive test/**/*.spec.js --colors"
   },
   "dependencies": {
     "babel": "6.3.26",
@@ -21,10 +21,12 @@
     "bootstrap": "3.3.6",
     "express": "4.13.3",
     "johnny-five": "0.9.17",
+    "moment": "2.11.1",
     "node-schedule": "0.6.0",
     "react": "0.14.6",
     "react-dom": "0.14.6",
-    "shortid": "^2.2.4",
+    "serve-favicon": "2.3.0",
+    "shortid": "2.2.4",
     "socket.io": "1.4.3",
     "webpack": "1.12.10"
   },

@@ -1,36 +1,36 @@
 import React, { Component, PropTypes } from 'react';
+import Header from './header.jsx';
 import AddNewSchedule from './addNewSchedule.jsx';
+import ListOfSchedules from './listOfSchedules.jsx';
 
 class ScheduledFeeding extends Component {
     static propTypes = {
-        data: PropTypes.object.isRequired,
+        scheduledFeeding: PropTypes.object.isRequired,
+        scheduledTimes: PropTypes.array.isRequired,
         onAddScheduledFeedingClick: PropTypes.func.isRequired,
         onSaveScheduledFeedingClick: PropTypes.func.isRequired,
-        onCancelScheduledFeedingClick: PropTypes.func.isRequired
+        onCancelScheduledFeedingClick: PropTypes.func.isRequired,
+        onRemoveScheduledFeedingClick: PropTypes.func.isRequired
     };
 
     render() {
-        const divStyles = {
-            paddingBottom: '9px',
-            margin: '40px 0 20px',
-            borderBottom: '1px solid #000'
-        };
 
         return (
             <div className="row">
                 <div className="col-xs-12">
-                    <div style={divStyles}>
-                        <h1>Zaplanowanie karmienie</h1>
-                    </div>
+                    <Header title="Zaplanowanie karmienie"/>
 
                     <AddNewSchedule
-                        data={this.props.data}
+                        scheduledFeeding={this.props.scheduledFeeding}
                         onAddScheduledFeedingClick={this.props.onAddScheduledFeedingClick}
                         onSaveScheduledFeedingClick={this.props.onSaveScheduledFeedingClick}
-                        onCancelScheduledFeedingClick={this.props.onCancelScheduledFeedingClick}
-                    />
+                        onCancelScheduledFeedingClick={this.props.onCancelScheduledFeedingClick}/>
 
-                    {/* TODO: List of schedules */}
+                    { /* TODO: Unlock this later - Boolean(this.props.scheduledTimes.length) &&*/
+                    <ListOfSchedules
+                        scheduledTimes={this.props.scheduledTimes}
+                        onRemoveScheduledFeedingClick={this.props.onRemoveScheduledFeedingClick}/>
+                    }
                 </div>
             </div>
         );

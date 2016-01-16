@@ -1,4 +1,7 @@
 const shortid = require('shortid');
+const moment = require('moment');
+moment.locale('pl');
+
 
 const decorateScheduledTime = (scheduledTime) => {
     scheduledTime.hour = Number(scheduledTime.hour);
@@ -11,4 +14,21 @@ const decorateScheduledTime = (scheduledTime) => {
     return scheduledTime;
 };
 
-module.exports = { decorateScheduledTime };
+const addLeadingZeroToTime = (time) => {
+    return ('0' + time).slice(-2);
+};
+
+const removeLeadingZeroInTime = (time) => {
+    return parseInt(time, 10).toString();
+};
+
+const convertTimestamp = (timestamp) => {
+    return moment(timestamp).format('ll, HH:mm');
+};
+
+module.exports = {
+    decorateScheduledTime,
+    addLeadingZeroToTime,
+    removeLeadingZeroInTime,
+    convertTimestamp
+};

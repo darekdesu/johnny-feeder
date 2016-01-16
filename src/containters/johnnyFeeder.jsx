@@ -21,7 +21,8 @@ class JohhnyFeeder extends Component {
         scheduledFeeding: {
             isAddButtonActive: true,
             isEditMode: true
-        }
+        },
+        scheduledTimes: []
     };
 
     componentWillMount() {
@@ -133,6 +134,10 @@ class JohhnyFeeder extends Component {
         });
     };
 
+    handleRemoveScheduledFeedingClick = (removeScheduleId) => {
+        console.log('remove clicked!!! ', removeScheduleId);
+    };
+
     render() {
         return (
             <div>
@@ -140,12 +145,15 @@ class JohhnyFeeder extends Component {
                 <div className="container">
                     <InstantFeeding
                         data={this.state.instantFeeding}
-                        onInstantFeedingClick={this.handleInstantFeedingClick}/>
+                        onInstantFeedingClick={this.handleInstantFeedingClick}
+                    />
                     <ScheduledFeeding
-                        data={this.state.scheduledFeeding}
+                        scheduledFeeding={this.state.scheduledFeeding}
+                        scheduledTimes={this.state.scheduledTimes}
                         onAddScheduledFeedingClick={this.handleAddScheduledFeedingClick}
                         onSaveScheduledFeedingClick={this.handleSaveScheduledFeedingClick}
-                        onCancelScheduledFeedingClick={this.handleCancelScheduledFeedingClick}/>
+                        onCancelScheduledFeedingClick={this.handleCancelScheduledFeedingClick}
+                        onRemoveScheduledFeedingClick={this.handleRemoveScheduledFeedingClick}/>
                 </div>
             </div>
         );
