@@ -2,8 +2,9 @@ const five = require("johnny-five");
 const q = require('q');
 
 const board = new five.Board();
-const SERVO_HALF_ROTATE_TIME_IN_MS = 1500;
-const SERVO_FULL_ROTATE_TIME_IN_MS = 3000;
+const SERVO_HALF_ROTATE_TIME_IN_MS = 1000;
+const SERVO_FULL_ROTATE_TIME_IN_MS = 2000;
+const SERVO_SPEED = 0.15; // 0-1
 
 const rotateServo = () => {
     const deferred = q.defer();
@@ -15,11 +16,11 @@ const rotateServo = () => {
         });
 
         servoContinuous.stop();
-        servoContinuous.ccw(1);
+        servoContinuous.ccw(SERVO_SPEED);
 
         setTimeout(() => {
             servoContinuous.stop();
-            servoContinuous.cw(1);
+            servoContinuous.cw(SERVO_SPEED);
         },SERVO_HALF_ROTATE_TIME_IN_MS);
 
         setTimeout(() => {

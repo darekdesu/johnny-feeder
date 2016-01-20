@@ -24,7 +24,7 @@ class ListOfSchedules extends Component {
                     <table className="table table-striped">
                         <thead>
                         <tr>
-                            <th>Godzina</th>
+                            <th>Czas</th>
                             <th>Dni tygodnia</th>
                             <th>Czas dodania</th>
                             <th>Akcja</th>

@@ -18,7 +18,7 @@ class ScheduledFeeding extends Component {
         return (
             <div className="row">
                 <div className="col-xs-12">
-                    <Header title="Zaplanowanie karmienie"/>
+                    <Header title="Zaplanowane karmienie"/>
 
                     <AddNewSchedule
                         scheduledFeeding={this.props.scheduledFeeding}

@@ -56,8 +56,7 @@ class JohhnyFeeder extends Component {
                 instantFeeding: {
                     isButtonActive: true,
                     showAlert: true,
-                    alertStatus: ALERT_DANGER,
-                    alertMessage: 'Nie udało się ;<'
+                    alertStatus: ALERT_DANGER
                 }
             });
             return;
@@ -67,8 +66,7 @@ class JohhnyFeeder extends Component {
             instantFeeding: {
                 isButtonActive: true,
                 showAlert: true,
-                alertStatus: ALERT_SUCCESS,
-                alertMessage: 'Udało się!'
+                alertStatus: ALERT_SUCCESS
             }
         });
     };
