@@ -7,7 +7,7 @@
     "email": "johnny-feeder@darek.one"
   },
   "scripts": {
-    "start": "node --use_strict app.js",
+    "start": "node --use_strict src/server.js",
     "build": "webpack --config webpack.config.js --progress --colors",
     "unit": "mocha --compilers js:babel-core/register --recursive test/**/*.spec.js --colors"
   },
