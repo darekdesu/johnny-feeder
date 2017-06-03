@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/devvdi/johnny-feeder.svg?branch=master)](https://travis-ci.org/devvdi/johnny-feeder)
+
 # Johnny Feeder
 Feeder system for your animals based on Node.js and framework Johnny-Five for control Arduino board and ReactJS for interface.
 

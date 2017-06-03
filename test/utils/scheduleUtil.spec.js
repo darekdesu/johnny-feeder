@@ -1,9 +1,11 @@
 import chai from 'chai';
-const should = chai.should();
-import {
-    decorateScheduledTime,
-} from '../../src/utils/scheduleUtil.js';
+import proxyquire from 'proxyquire';
 
+const should = chai.should();
+
+const { decorateScheduledTime } = proxyquire('../../src/utils/scheduleUtil.js', {
+    './boardUtil': { '@noCallThru': true },
+});
 
 describe('Test decorate scheduled time', () => {
     it('should change strings hour, minute and checked days to numbers', ()  => {
