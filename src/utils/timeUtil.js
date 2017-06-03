@@ -10,7 +10,7 @@ const removeLeadingZeroInTime = (time) => {
 };
 
 const convertTimestamp = (timestamp) => {
-    return moment(timestamp).format('ll, HH:mm');
+    return moment(timestamp).utc().format('ll, HH:mm');
 };
 
 module.exports = {
