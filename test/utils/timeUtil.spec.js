@@ -34,7 +34,7 @@ describe('Timestamp', () => {
     it('should convert timestamp to human readable date and time', () => {
         const timestamp = 946728000000;
 
-        const expectedDateTime = '1 sty 2000, 13:00';
+        const expectedDateTime = '1 sty 2000, 12:00';
 
         convertTimestamp(timestamp).should.eql(expectedDateTime)
     });
