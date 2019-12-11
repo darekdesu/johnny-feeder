@@ -9,31 +9,35 @@
   "scripts": {
     "start": "node --use_strict src/server.js",
     "build": "webpack --config webpack.config.js --progress --colors",
-    "test": "mocha --compilers js:babel-core/register --recursive test/**/*.spec.js --colors"
+    "test": "mocha --compilers js:babel-core/register --recursive test/**/*.spec.js --colors",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "dependencies": {
     "babel": "6.3.26",
-    "babel-core": "6.4.0",
+    "babel-core": "6.10.4",
     "babel-loader": "6.2.1",
     "babel-preset-es2015": "6.3.13",
     "babel-preset-react": "6.3.13",
     "babel-preset-stage-1": "6.3.13",
-    "bootstrap": "3.3.6",
-    "express": "4.13.3",
-    "johnny-five": "0.9.17",
-    "moment": "2.11.1",
+    "bootstrap": "3.4.1",
+    "express": "4.16.0",
+    "johnny-five": "0.9.24",
+    "moment": "2.19.3",
     "node-schedule": "0.6.0",
     "q": "1.4.1",
     "react": "0.14.6",
     "react-dom": "0.14.6",
-    "serve-favicon": "2.3.0",
+    "serve-favicon": "2.4.5",
     "shortid": "2.2.4",
-    "socket.io": "1.4.3",
-    "webpack": "1.12.10"
+    "socket.io": "2.0.2",
+    "webpack": "2.2.0",
+    "snyk": "^1.258.2"
   },
   "devDependencies": {
     "chai": "3.4.1",
     "mocha": "2.3.4",
     "proxyquire": "1.8.0"
-  }
+  },
+  "snyk": true
 }
