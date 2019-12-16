@@ -112,6 +112,28 @@ patch:
         patched: '2019-12-11T11:29:42.060Z'
     - babel-preset-stage-1 > babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-to-generator > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-traverse > debug:
         patched: '2019-12-11T11:29:42.060Z'
+    - webpack > watchpack > chokidar > braces > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > braces > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > braces > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > nanomatch > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > nanomatch > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
+    - webpack > watchpack > chokidar > readdirp > micromatch > extglob > expand-brackets > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
+    - webpack > watchpack > chokidar > anymatch > micromatch > extglob > expand-brackets > snapdragon > debug:
+        patched: '2019-12-16T08:51:54.647Z'
   'npm:extend:20180424':
     - johnny-five > serialport > node-pre-gyp > request > extend:
         patched: '2019-12-11T11:29:42.060Z'
